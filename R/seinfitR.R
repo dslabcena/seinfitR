@@ -28,7 +28,7 @@
 #' colnames(data)[1] ="x"
 #'
 #' # Fit the model using seinfitR with initial parameter values and control settings
-#' seinfitR(data = data, start = list(m = 0.103, z = 0.991, t = 250),
+#' seinfitR(data = data, start = list(m = 0.103, t = 250, z = 0.991),
 #'          control = seinfitR_control(maxiter = 100))
 #'
 seinfitR <- function(data, start = NULL, control = seinfitR_control(maxiter = 100)) {
@@ -60,6 +60,6 @@ seinfitR <- function(data, start = NULL, control = seinfitR_control(maxiter = 10
   sumario <- summary(fit)
   cov <- vcov(fit)
 
-  list_resul <- list("Sumario" = sumario, "cov" = cov)
+  list_resul <- list("fit" = fit, "Sumario" = sumario, "cov" = cov)
   return(list_resul)
 }
