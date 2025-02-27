@@ -6,7 +6,7 @@
 #' of the model.
 #'
 #' @param data A data frame containing the experimental data. It should include at least
-#' two columns: `pi` (preplant nematode densities) and `y` (plant growth response).
+#' two columns: `x` (preplant nematode densities) and `y` (plant growth response).
 #'
 #' @param start A list of starting values for the parameters `m`, `t`, and `z`. These values
 #' are used to initialize the nonlinear least squares fitting process.
@@ -21,14 +21,34 @@
 #' @importFrom minpack.lm nlsLM nls.lm.control
 #'
 #' @examples
-#' # example code
+#' library("readxl")
+#' # Load example data from the inst/extdata folder
+#' data <- read_excel(system.file("extdata", "raw_data_pathogenicity_test.xlsx", package = "seinfitR"))
+#' colnames(data)[5] ="y"
+#' colnames(data)[1] ="x"
 #'
-seinfitR <- function(data, start, control = seinfitR_control(maxiter=100)){
-  nlsLM(
+#' # Fit the model using seinfitR with initial parameter values and control settings
+#' seinfitR(data = data, start = list(m = 0.103, z = 0.991, t = 250),
+#'          control = seinfitR_control(maxiter = 100))
+#'
+seinfitR <- function(data, start = NULL, control = seinfitR_control(maxiter = 100)) {
+
+  # If start is NULL, ask the user for input
+  if (is.null(start)) {
+    m <- as.numeric(readline(prompt = "Please enter the value for m: "))
+    t <- as.numeric(readline(prompt = "Please enter the value for t: "))
+    z <- as.numeric(readline(prompt = "Please enter the value for z: "))
+
+    # Create a start list with user inputs
+    start <- list(m = m, t = t, z = z)
+  }
+
+  # Perform the fitting
+  fit <- nlsLM(
     y ~ ifelse(x <= t,
                mean(y[x <= t]),
                (mean(y[x <= t]) * m) + (mean(y[x <= t]) * (1 - m) * z^(x - t))),
-    start = list(m = start$m, t = start$t, z = start$z),
+    start = start,
     control = control,
     lower = c(0, 0, 0),
     upper = c(max(data$y), max(data$x), 1),
@@ -36,5 +56,10 @@ seinfitR <- function(data, start, control = seinfitR_control(maxiter=100)){
     trace = TRUE,
     data = data
   )
-}
 
+  sumario <- summary(fit)
+  cov <- vcov(fit)
+
+  list_resul <- list("Sumario" = sumario, "cov" = cov)
+  return(list_resul)
+}
