@@ -4,11 +4,11 @@
 \alias{seinfitR}
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
-seinfitR(data, start, control = seinfitR_control(maxiter = 100))
+seinfitR(data, start = NULL, control = seinfitR_control(maxiter = 100))
 }
 \arguments{
 \item{data}{A data frame containing the experimental data. It should include at least
-two columns: \code{pi} (preplant nematode densities) and \code{y} (plant growth response).}
+two columns: \code{x} (preplant nematode densities) and \code{y} (plant growth response).}
 
 \item{start}{A list of starting values for the parameters \code{m}, \code{t}, and \code{z}. These values
 are used to initialize the nonlinear least squares fitting process.}
@@ -26,6 +26,14 @@ The function uses the \code{nlsLM} function from the \code{minpack.lm} package t
 of the model.
 }
 \examples{
-# example code
+library("readxl")
+# Load example data from the inst/extdata folder
+data <- read_excel(system.file("extdata", "raw_data_pathogenicity_test.xlsx", package = "seinfitR"))
+colnames(data)[5] ="y"
+colnames(data)[1] ="x"
+
+# Fit the model using seinfitR with initial parameter values and control settings
+seinfitR(data = data, start = list(m = 0.103, z = 0.991, t = 250),
+         control = seinfitR_control(maxiter = 100))
 
 }
