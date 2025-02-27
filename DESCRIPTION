@@ -12,7 +12,8 @@ RoxygenNote: 7.3.2
 Imports:
     minpack.lm
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    readxl
 Config/testthat/edition: 3
 URL: https://github.com/dslabcena/seinfitR
 BugReports: https://github.com/dslabcena/seinfitR/issues
