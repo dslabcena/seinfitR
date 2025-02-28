@@ -4,9 +4,13 @@
 \alias{seinfitR}
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
-seinfitR(data, start = NULL, control = seinfitR_control(maxiter = 100))
+seinfitR(x = "x", y = "y", data, start = NULL, control = seinfitR_control())
 }
 \arguments{
+\item{x}{dados de x}
+
+\item{y}{dados de y}
+
 \item{data}{A data frame containing the experimental data. It should include at least
 two columns: \code{x} (preplant nematode densities) and \code{y} (plant growth response).}
 
@@ -27,13 +31,13 @@ of the model.
 }
 \examples{
 library("readxl")
-# Load example data from the inst/extdata folder
 data <- read_excel(system.file("extdata", "raw_data_pathogenicity_test.xlsx", package = "seinfitR"))
 colnames(data)[5] ="y"
-colnames(data)[1] ="x"
-
+colnames(data)[1] ="p_i"
 # Fit the model using seinfitR with initial parameter values and control settings
-seinfitR(data = data, start = list(m = 0.103, t = 250, z = 0.991),
+seinfitR(x="p_i", y="y", data = data, start = list(m = 0.103, t = 250, z = 0.991),
          control = seinfitR_control(maxiter = 100))
+
+
 
 }
