@@ -120,12 +120,16 @@ seinfitR <- function(x = "x", y = "y", data, start = NULL,
   })
 
   # Criar a lista de resultados
-  list_resul <- list(
+  result <- list(
     fit = fit,
-    Sumario = summary(fit),
-    cov = tryCatch(vcov(fit), error = function(e) NULL) # Evita erro caso vcov não seja computável
+    summary_seinfitR = summary(fit),
+    cov = tryCatch(vcov(fit), error = function(e) NULL), # Evita erro caso vcov não seja computável
+    data = data,
+    x = x,
+    y = y
   )
 
-  return(list_resul)
+  class(result) <- "seinfitR" #Assign the clas
+  return(result)
 }
 

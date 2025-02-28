@@ -21,10 +21,10 @@
 
 \item{\dots}{currently unused.}
 
-\item{object}{an object of class \code{seinfitR}}
+\item{object}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
 }
 \value{
-.
+Prints a summary of the model fit to the console.
 }
 \description{
 Methods for 'seinfitR' objects
