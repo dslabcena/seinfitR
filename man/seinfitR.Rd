@@ -4,10 +4,17 @@
 \alias{seinfitR}
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
-seinfitR(x = "x", y = "y", data, start = NULL, control = seinfitR_control())
+seinfitR(
+  p_i = "x",
+  y = "y",
+  data,
+  start = NULL,
+  z_fixed = NULL,
+  control = seinfitR_control()
+)
 }
 \arguments{
-\item{x}{dados de x}
+\item{p_i}{dados de p_i}
 
 \item{y}{dados de y}
 
@@ -33,7 +40,7 @@ of the model.
 
 
 # Fit the model using seinfitR with initial parameter values and control settings
-seinfitR(x="p_i", y="y", data = jambu, start = list(m = 0.103, t = 250, z = 0.991),
+seinfitR(p_i="p_i", y="y", data = jambu, start = list(m = 0.103, t = 250, z = 0.991),
          control = seinfitR_control(maxiter = 100))
 
 
