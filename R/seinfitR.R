@@ -6,7 +6,7 @@
 #' of the model.
 #'
 #
-#' @param x dados de x
+#' @param p_i dados de p_i
 #' @param y dados de y
 #'
 #' @param data A data frame containing the experimental data. It should include at least
@@ -32,7 +32,7 @@
 ## Load example data from the data folder
 #'
 #' # Fit the model using seinfitR with initial parameter values and control settings
-#' seinfitR(x="p_i", y="y", data = jambu, start = list(m = 0.103, t = 250, z = 0.991),
+#' seinfitR(p_i="p_i", y="y", data = jambu, start = list(m = 0.103, t = 250, z = 0.991),
 #'          control = seinfitR_control(maxiter = 100))
 #'
 #'
@@ -72,16 +72,16 @@
 
 
 
-seinfitR <- function(x = "x", y = "y", data, start = NULL,
+seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = NULL,
                      control = seinfitR_control()) {
 
   # Verificar se os nomes das colunas existem no conjunto de dados
-  if (!(x %in% names(data)) || !(y %in% names(data))) {
+  if (!(p_i %in% names(data)) || !(y %in% names(data))) {
     stop("The specified columns do not exist in the dataset.")
   }
 
   # Extrair as colunas corretas do dataset
-  x_data <- data[[x]]
+  x_data <- data[[p_i]]
   y_data <- data[[y]]
 
   # Ensure values are numeric and contain no NAs
@@ -93,7 +93,7 @@ seinfitR <- function(x = "x", y = "y", data, start = NULL,
     if (is.null(start)) {
        m <- as.numeric(readline(prompt = "Please enter the value for m: "))
        t <- as.numeric(readline(prompt = "Please enter the value for t: "))
-   z <- as.numeric(readline(prompt = "Please enter the value for z: "))
+       z <- as.numeric(readline(prompt = "Please enter the value for z: "))
 
       # Create a start list with user inputs
       start <- list(m = m, t = t, z = z)
@@ -116,17 +116,24 @@ seinfitR <- function(x = "x", y = "y", data, start = NULL,
     stop("Error in model fitting: ", e$message)
   })
 
+  fitted_values <- predict(fit)
+
+  ss_total <- sum((y_data - mean(y_data))^2)
+  ss_residual <- sum((y_data - fitted_values)^2)
+  r_squared <- 1 - (ss_residual / ss_total)
+
   # Criar a lista de resultados
   result <- list(
     fit = fit,
     summary_seinfitR = summary(fit),
     cov = tryCatch(vcov(fit), error = function(e) NULL), # Evita erro caso vcov não seja computável
     data = data,
-    x = x,
+    r_squared = r_squared,
+    x = p_i,
     y = y
   )
 
-  class(result) <- "seinfitR" #Assign the clas
+  class(result) <- "seinfitR" #Assign the class
   return(result)
 }
 
