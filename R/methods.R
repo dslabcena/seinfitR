@@ -78,3 +78,17 @@ summary.seinfitR <- function(object, ...) {
   cat("-----------------------------------------------------\n")
   invisible(object)
 }
+
+#-----------------------------------------------------------------------
+
+# R² method
+#' @rdname seinfitR-methods
+#' @export
+r_squared.seinfitR <- function(x, ...) {
+  if (is.null(x$r_squared)) {
+    stop("R² is not available. Please fit the model first.")
+  }
+
+  cat("\nR² (Coefficient of Determination): ", round(x$r_squared, 4), "\n")
+  invisible(x)
+}
