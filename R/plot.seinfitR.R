@@ -16,7 +16,7 @@ plot.seinfitR <- function(x, ...) {
 
   # Create plot
   plot(data[[x_var]], data[[y_var]], main = "Seinhorst Model",
-       xlab = x_var, ylab = y_var, col = "blue", pch = 16)
+       xlab = "", ylab = "", col = "blue", pch = 16)
 
   # Add fitted curve
   fitted_values <- predict(x$fit, newdata = data)
