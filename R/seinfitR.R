@@ -72,8 +72,7 @@
 
 
 
-seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = NULL,
-                     control = seinfitR_control()) {
+seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, control = seinfitR_control()) {
 
   # Verificar se os nomes das colunas existem no conjunto de dados
   if (!(p_i %in% names(data)) || !(y %in% names(data))) {
@@ -89,29 +88,43 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = NULL,
     stop("The selected columns must contain only numeric values and cannot have NAs.")
   }
 
-  # If start is NULL, ask the user for input
-    if (is.null(start)) {
-       m <- as.numeric(readline(prompt = "Please enter the value for m: "))
-       t <- as.numeric(readline(prompt = "Please enter the value for t: "))
-       z <- as.numeric(readline(prompt = "Please enter the value for z: "))
+  # Se start for NULL, solicitar entrada do usuário
+  if (is.null(start)) {
+    m <- as.numeric(readline(prompt = "Please enter the value for m: "))
+    t <- as.numeric(readline(prompt = "Please enter the value for t: "))
+    z <- as.numeric(readline(prompt = "Please enter the value for z: "))
 
-      # Create a start list with user inputs
-      start <- list(m = m, t = t, z = z)
+    start <- list(m = m, t = t, z = z)
   }
 
-  # Ajuste do modelo
+  # Ajuste do modelo dependendo de z_fixed
   fit <- tryCatch({
-    nlsLM(
-      y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
-        (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
-                          (mean(y_data[x_data <= t]) * (1 - m) * z^(x_data - t))),
-      start = start,
-      control = control,
-      lower = c(0, min(x_data), 0),
-      upper = c(max(y_data), max(x_data), 1),
-      algorithm = "LM",
-      trace = TRUE
-    )
+    if (z_fixed) {
+      z_value <- start$z # Manter z fixo
+      nlsLM(
+        y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
+          (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
+                            (mean(y_data[x_data <= t]) * (1 - m) * z_value^(x_data - t))),
+        start = list(m = start$m, t = start$t),
+        control = control,
+        lower = c(0, min(x_data)),
+        upper = c(max(y_data), max(x_data)),
+        algorithm = "LM",
+        trace = TRUE
+      )
+    } else {
+      nlsLM(
+        y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
+          (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
+                            (mean(y_data[x_data <= t]) * (1 - m) * z^(x_data - t))),
+        start = start,
+        control = control,
+        lower = c(0, min(x_data), 0),
+        upper = c(max(y_data), max(x_data), 1),
+        algorithm = "LM",
+        trace = TRUE
+      )
+    }
   }, error = function(e) {
     stop("Error in model fitting: ", e$message)
   })
@@ -126,14 +139,15 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = NULL,
   result <- list(
     fit = fit,
     summary_seinfitR = summary(fit),
-    cov = tryCatch(vcov(fit), error = function(e) NULL), # Evita erro caso vcov não seja computável
+    cov = tryCatch(vcov(fit), error = function(e) NULL),
     data = data,
     r_squared = r_squared,
     x = p_i,
-    y = y
+    y = y,
+    z_fixed = z_fixed
   )
 
-  class(result) <- "seinfitR" #Assign the class
+  class(result) <- "seinfitR" # Assign the class
   return(result)
 }
 
