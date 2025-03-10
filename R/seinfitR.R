@@ -89,7 +89,7 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
   }
 
   # Se start for NULL, solicitar entrada do usuário
-  if (is.null(start)) {
+  if (is.null(start) && !z_fixed) {
     m <- as.numeric(readline(prompt = "Please enter the value for m: "))
     t <- as.numeric(readline(prompt = "Please enter the value for t: "))
     z <- as.numeric(readline(prompt = "Please enter the value for z: "))
@@ -97,14 +97,19 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
     start <- list(m = m, t = t, z = z)
   }
 
+  if (is.null(start) && z_fixed){
+    m <- as.numeric(readline(prompt = "Please enter the value for m: "))
+    t <- as.numeric(readline(prompt = "Please enter the value for t: "))
+
+    start <- list(m = m, t = t)
+  }
   # Ajuste do modelo dependendo de z_fixed
   fit <- tryCatch({
     if (z_fixed) {
-      z_value <- start$z # Manter z fixo
       nlsLM(
         y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
           (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
-                            (mean(y_data[x_data <= t]) * (1 - m) * z_value^(x_data - t))),
+                            (mean(y_data[x_data <= t]) * (1 - m) * 0.95^(x_data * t ^(-1) -1))),
         start = list(m = start$m, t = start$t),
         control = control,
         lower = c(0, min(x_data)),
