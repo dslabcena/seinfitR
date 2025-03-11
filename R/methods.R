@@ -76,6 +76,8 @@ summary.seinfitR <- function(object, ...) {
   cat("-----------------------------------------------------\n")
   print(object$summary_seinfitR$coefficients)
   cat("-----------------------------------------------------\n")
+  cat("R Squared: ", object$r_squared, "\n")
+  cat("-----------------------------------------------------\n")
   invisible(object)
 }
 
