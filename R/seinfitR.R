@@ -103,29 +103,32 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
 
     start <- list(m = m, t = t)
   }
+
+  y_max <- mean(y_data[x_data <= start$t])
+  print(y_max)
   # Ajuste do modelo dependendo de z_fixed
   fit <- tryCatch({
     if (z_fixed) {
       nlsLM(
-        y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
-          (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
-                            (mean(y_data[x_data <= t]) * (1 - m) * 0.95^(x_data * t ^(-1) -1))),
-        start = list(m = start$m, t = start$t),
+        y_data ~ ifelse(x_data <= t,
+                        y_max,
+                        (y_max * m) + (y_max * (1 - m) * 0.95^(x_data * t ^(-1) -1))),
+        start = list(m = start$m, t = start$t, y_max = y_max),
         control = control,
-        lower = c(0, min(x_data)),
-        upper = c(max(y_data), max(x_data)),
+        lower = c(0, min(x_data), min(x_data)),
+        upper = c(max(y_data), max(x_data), max(x_data)),
         algorithm = "LM",
         trace = TRUE
       )
     } else {
       nlsLM(
-        y_data ~ (x_data <= t) * mean(y_data[x_data <= t]) +
-          (x_data > t) * ((mean(y_data[x_data <= t]) * m) +
-                            (mean(y_data[x_data <= t]) * (1 - m) * z^(x_data - t))),
-        start = start,
+        y_data ~ ifelse(x_data <= t,
+                        y_max,
+                        (y_max * m) + (y_max * (1 - m) * z^(x_data - t))),
+        start = list(m = start$m, t = start$t, z=start$z, y_max=y_max),
         control = control,
-        lower = c(0, min(x_data), 0),
-        upper = c(max(y_data), max(x_data), 1),
+        lower = c(0, min(x_data), 0, min(x_data)),
+        upper = c(max(y_data), max(x_data), 1, max(y_data)),
         algorithm = "LM",
         trace = TRUE
       )
