@@ -7,21 +7,26 @@
 \format{
 A data frame with 5,002 rows and 2 columns:
 \describe{
-\item{p_i}{Nematode population density (initial population)}
-\item{y}{Crop yield, other plant growth parameter, or ratio of the estimated variable for plant growth in an initial population density of the nematode}
+\item{p_i}{Nematode population density (initial population).}
+\item{y}{Crop yield, another plant growth parameter, or the ratio of the estimated variable for plant growth at an initial nematode population density.}
 }
 }
 \source{
-https://osf.io/pm94t
+\url{https://osf.io/pm94t}
 }
 \usage{
 data(jambu, package = "seinfitR")
 }
 \description{
-This dataset contains information on nematode population density (\code{p_i}) and crop yield (\code{y}).
-It is used in the \code{seinfitR} package for modeling plant growth in relation to nematode populations.
+This dataset is based on the results of a pre-modeled raw dataset. The original data was generated using
+seven repetitions for five initial nematode population densities (\code{p_i}): 0, 500, 1000, 2500, and 5000.
+The model parameters \code{t}, \code{m}, and \code{z} obtained from the raw dataset were then used to predict and extend
+\code{p_i} values across the range from 0 to 5001.
+}
+\details{
+This dataset is used in the \code{seinfitR} package to study the relationship between nematode populations and plant growth.
 }
 \references{
-Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in \emph{Acmella oleracea} caused by the foliar nematode \emph{Aphelenchoides pseudobesseyi}. \emph{J Plant Dis Prot}, 131, 1707–1720. https://doi.org/10.1007/s41348-024-00982-2
+Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in \emph{Acmella oleracea} caused by the foliar nematode \emph{Aphelenchoides pseudobesseyi}. \emph{J Plant Dis Prot}, 131, 1707–1720. \url{https://doi.org/10.1007/s41348-024-00982-2}
 }
 \keyword{datasets}
