@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
 
-\item{...}{Additional arguments (not used).}
+\item{\dots}{currently unused.}
 }
 \value{
 A plot showing the observed data (blue points) and the fitted curve (red line).

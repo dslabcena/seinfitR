@@ -12,11 +12,11 @@
 \item{newdata}{Optional. A data frame containing the independent variable for which predictions should be made.
 If not provided, predictions are made for the original data.}
 
-\item{...}{Additional arguments passed to the \code{predict()} function.}
+\item{\dots}{currently unused.}
 }
 \value{
 A data frame with the independent variable and the corresponding predicted values.
 }
 \description{
-This function generates predictions based on a fitted SEINH model.
+This function generates predictions based on a fitted Seinhorst model.
 }

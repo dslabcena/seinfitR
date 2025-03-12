@@ -5,7 +5,7 @@
 \alias{print.seinfitR}
 \alias{vcov.seinfitR}
 \alias{summary.seinfitR}
-\alias{r_squared.seinfitR}
+\alias{r_squared}
 \title{Methods for 'seinfitR' objects}
 \usage{
 \method{print}{seinfitR}(x, digits = max(3L, getOption("digits") - 3L), ...)
@@ -14,7 +14,7 @@
 
 \method{summary}{seinfitR}(object, ...)
 
-r_squared.seinfitR(x, ...)
+r_squared(object, ...)
 }
 \arguments{
 \item{x}{an object of class \code{seinfitR}}
@@ -25,9 +25,6 @@ r_squared.seinfitR(x, ...)
 \item{\dots}{currently unused.}
 
 \item{object}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
-}
-\value{
-Prints a summary of the model fit to the console.
 }
 \description{
 Methods for 'seinfitR' objects

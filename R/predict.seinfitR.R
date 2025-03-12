@@ -1,11 +1,11 @@
 #' Predict method for seinfitR objects
 #'
-#' This function generates predictions based on a fitted SEINH model.
+#' This function generates predictions based on a fitted Seinhorst model.
 #'
 #' @param object An object of class `seinfitR` (output from `seinfitR()`).
 #' @param newdata Optional. A data frame containing the independent variable for which predictions should be made.
 #' If not provided, predictions are made for the original data.
-#' @param ... Additional arguments passed to the `predict()` function.
+#' @param \dots currently unused.
 #'
 #' @return A data frame with the independent variable and the corresponding predicted values.
 #' @export

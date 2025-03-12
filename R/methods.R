@@ -5,7 +5,6 @@
 #' @param \dots currently unused.
 #' @param digits minimal number of \emph{significant} digits, see
 #'   \code{\link[base]{print.default}}
-#' @return Prints a summary of the model fit to the console.
 #' @importFrom stats coef vcov
 #'
 NULL
@@ -21,7 +20,7 @@ print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   cat("\nSeinhorst Model Fit Summary\n")
   cat("-----------------------------------------------------\n")
   cat("Dependent Variable:", x$y, "\n")
-  cat("Independent Variable:", x$x, "\n")
+  cat("Predictor Variable:", x$x, "\n")
   cat("Number of Observations:", nrow(x$data), "\n\n")
 
   print(x$summary_seinfitR$coefficients)
@@ -32,26 +31,10 @@ print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 #-----------------------------------------------------------------------
 
-# Print method
-#@rdname seinfitR-methods
-# @export
-# print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
-#   cat("\nSeinhorst Model Fit\n")
-#
-#   cat("Parameters:\n")
-#   print.default(format(coef(x$fit), digits = digits), print.gap = 2, quote = FALSE)
-#
-#   cat("\n")
-#   cat("For more details, run the summary function")
-#
-#   invisible(x)
-# }
-
-#-----------------------------------------------------------------------
-
 # vcov method
 #' @rdname seinfitR-methods
 #' @export
+
 vcov.seinfitR <- function(object, ...) {
   vc <- vcov(object$fit)
   if (is.null(vc)) {
@@ -66,31 +49,51 @@ vcov.seinfitR <- function(object, ...) {
 # Summary method
 #' @rdname seinfitR-methods
 #' @export
-# summary.seinfitR <- function(object, ...) {
-#   summary(object$fit)
-# }
-
 
 summary.seinfitR <- function(object, ...) {
   cat("\nSeinhorst Model - Parameter Estimates\n")
   cat("-----------------------------------------------------\n")
   print(object$summary_seinfitR$coefficients)
   cat("-----------------------------------------------------\n")
-  cat("R Squared: ", object$r_squared, "\n")
+  cat()
   cat("-----------------------------------------------------\n")
   invisible(object)
 }
 
 #-----------------------------------------------------------------------
 
-# R² method
+# r_squared method
 #' @rdname seinfitR-methods
-#' @export
-r_squared.seinfitR <- function(x, ...) {
-  if (is.null(x$r_squared)) {
-    stop("R² is not available. Please fit the model first.")
+#' @export r_squared
+r_squared <- function(object, ...) UseMethod("r_squared")
+
+#'@export
+
+r_squared.seinfitR <- function(object, ...) {
+
+  if (!inherits(object, "seinfitR")) {
+    stop("Object is not of class 'seinfitR'")
   }
 
-  cat("\nR² (Coefficient of Determination): ", round(x$r_squared, 4), "\n")
-  invisible(x)
+  fitted_values <- predict(object$fit)
+
+  ss_total <- sum((object$data[[object$y]] - mean(object$data[[object$y]]))^2)
+  ss_residual <- sum((object$data[[object$y]] - fitted_values)^2)
+  r_squared <- 1 - (ss_residual / ss_total)
+
+
+  n <- nrow(object$data)
+  p <- length(coef(object$fit)) - 1
+
+  adjusted_r_squared <- 1 - ((1 - r_squared) * (n - 1) / (n - p - 1))
+
+  class(r_squared) <- "r_squared.seinfitR"
+  class(adjusted_r_squared) <- "r_squared.seinfitR"
+
+  cat("R² (Coefficient of Determination): ", r_squared, "\n")
+  cat("Adjusted R²: ", adjusted_r_squared, "\n")
+
+  invisible(object)
 }
+
+#-----------------------------------------------------------------------

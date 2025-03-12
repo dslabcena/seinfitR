@@ -3,7 +3,7 @@
 #' This function generates a scatter plot of the observed data along with the fitted SEINH model.
 #'
 #' @param x An object of class `seinfitR` (output from `seinfitR()`).
-#' @param ... Additional arguments (not used).
+#' @param \dots currently unused.
 #'
 #' @return A plot showing the observed data (blue points) and the fitted curve (red line).
 #' @importFrom graphics legend lines
