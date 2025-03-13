@@ -45,9 +45,9 @@ Modeling plant response to nematode densities using the "jambu" dataset:
 library(seinfitR)
 
 # Fit the model
-model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
-                  start = list(m = 0.103, t = 250, z = 0.991),
-                  control = seinfitR_control(maxiter = 5))
+model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
+                  start = list(m = 6, t = 6),
+                  control = seinfitR_control(maxiter = 20), z_fixed = TRUE)
 
 # View model summary
 summary(model)
@@ -61,6 +61,9 @@ print(model)
 
 # Extract variance-covariance matrix
 vcov(model)
+
+#Extract model coefficients
+coef(model)
 
 # Calculate R-squared
 r_squared(model)

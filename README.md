@@ -36,23 +36,22 @@ Modeling plant response to nematode densities using the “jambu” dataset:
 library(seinfitR)
 
 # Fit the model
-model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
-                  start = list(m = 0.103, t = 250, z = 0.991),
-                  control = seinfitR_control(maxiter = 5))
-#> It.    0, RSS = 3.08149e-33, Par. =      0.103        250      0.991          1
-#> It.    1, RSS = 3.08149e-33, Par. =      0.103        250      0.991          1
+model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
+                  start = list(m = 6, t = 6),
+                  control = seinfitR_control(maxiter = 20), z_fixed = TRUE)
 
 # View model summary
 summary(model)
 #> 
 #> Seinhorst Model - Parameter Estimates
 #> -----------------------------------------------------
-#>       Estimate   Std. Error      t value Pr(>|t|)
-#> m        0.103 1.300604e-20 7.919397e+18        0
-#> t      250.000 1.961730e-17 1.274385e+19        0
-#> z        0.991 2.172494e-21 4.561578e+20        0
-#> y_max    1.000 4.956159e-20 2.017691e+19        0
+#>         Estimate  Std. Error   t value     Pr(>|t|)
+#> m      0.5951683 0.008177824  72.77832 4.096851e-16
+#> t      1.6829177 0.116059892  14.50042 1.627030e-08
+#> y_max 10.3675895 0.053752628 192.87596 9.127161e-21
 #> -----------------------------------------------------
+#> R2 - R squared (Coefficient of Determination):  0.9949782 
+#> Adjusted_R2 - Adjusted R squared:  0.9940652 
 #> -----------------------------------------------------
 ```
 
@@ -67,27 +66,33 @@ print(model)
 #> -----------------------------------------------------
 #> Dependent Variable: y 
 #> Predictor Variable: p_i 
-#> Number of Observations: 5002 
+#> Number of Observations: 14 
 #> 
-#>       Estimate   Std. Error      t value Pr(>|t|)
-#> m        0.103 1.300604e-20 7.919397e+18        0
-#> t      250.000 1.961730e-17 1.274385e+19        0
-#> z        0.991 2.172494e-21 4.561578e+20        0
-#> y_max    1.000 4.956159e-20 2.017691e+19        0
+#>         Estimate  Std. Error   t value     Pr(>|t|)
+#> m      0.5951683 0.008177824  72.77832 4.096851e-16
+#> t      1.6829177 0.116059892  14.50042 1.627030e-08
+#> y_max 10.3675895 0.053752628 192.87596 9.127161e-21
 #> -----------------------------------------------------
 
 # Extract variance-covariance matrix
 vcov(model)
-#>                   m             t             z         y_max
-#> m      1.691571e-40  4.916585e-38 -5.743163e-42 -2.530042e-40
-#> t      4.916585e-38  3.848386e-34 -2.868392e-38 -3.028962e-37
-#> z     -5.743163e-42 -2.868392e-38  4.719730e-42  1.187502e-51
-#> y_max -2.530042e-40 -3.028962e-37  1.187502e-51  2.456351e-39
+#>                   m            t         y_max
+#> m      6.687681e-05 -0.000364986 -0.0001181826
+#> t     -3.649860e-04  0.013469898 -0.0024948229
+#> y_max -1.181826e-04 -0.002494823  0.0028893450
+
+#Extract model coefficients
+coef(model)
+#>          m          t      y_max 
+#>  0.5951683  1.6829177 10.3675895
 
 # Calculate R-squared
 r_squared(model)
-#> R² (Coefficient of Determination):  1 
-#> Adjusted R²:  1
+#> $R2
+#> [1] 0.9949782
+#> 
+#> $Adjusted_R2
+#> [1] 0.9940652
 
 # Calculate Plot
 plot(model)
@@ -99,7 +104,7 @@ Methods Available for seinfitR Objects
 
 ``` r
 methods(class = "seinfitR")
-#> [1] plot      predict   print     r_squared summary   vcov     
+#> [1] coef      plot      predict   print     r_squared summary   vcov     
 #> see '?methods' for accessing help and source code
 ```
 
