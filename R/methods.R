@@ -90,8 +90,8 @@ r_squared.seinfitR <- function(object, ...) {
   class(r_squared) <- "r_squared.seinfitR"
   class(adjusted_r_squared) <- "r_squared.seinfitR"
 
-  cat("R² (Coefficient of Determination): ", r_squared, "\n")
-  cat("Adjusted R²: ", adjusted_r_squared, "\n")
+  cat("R squared (Coefficient of Determination): ", r_squared, "\n")
+  cat("Adjusted R squared: ", adjusted_r_squared, "\n")
 
   invisible(object)
 }
