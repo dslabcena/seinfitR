@@ -1,0 +1,78 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# seinfitR:  Modeling the Relationship Between Nematode Densities and Plant Growth
+
+Authors:
+
+Deoclecio Amorim - amorim@cena.usp.br, CENA-USP
+
+João Novoletti - joao.novoletti@gmail.com
+
+The goal of seinfitR is to fit the Seinhorst equation to experimental data describing the relationship between preplant nematode densities and plant growth using nonlinear least squares fitting.
+
+
+## Installation
+
+You can install the development version of seinfitR from [GitHub](https://github.com/dslabcena/seinfitR) with:
+
+``` r
+# install.packages("pak")
+pak::pak("dslabcena/seinfitR")
+```
+
+## Basic Use
+
+The syntax of seinfitR is straightforward, with the main function being seinfitR(...).
+
+## Example
+
+Modeling plant response to nematode densities using the "jambu" dataset:
+
+```{r example}
+library(seinfitR)
+
+# Fit the model
+model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
+                  start = list(m = 0.103, t = 250, z = 0.991),
+                  control = seinfitR_control(maxiter = 5))
+
+# View model summary
+summary(model)
+```
+
+The seinfitR package provides some methods for model evaluation and visualization:
+
+```{r methods}
+# Print model coefficients
+print(model)
+
+# Extract variance-covariance matrix
+vcov(model)
+
+# Calculate R-squared
+r_squared(model)
+
+# Calculate Plot
+plot(model)
+```
+
+Methods Available for seinfitR Objects
+```{r show_methods}
+methods(class = "seinfitR")
+```
+License
+
+The seinfitR package is licensed under the GNU General Public License, version 3, see file LICENSE.md. © 2024 Deoclecio J. Amorim & João Novoletti.
