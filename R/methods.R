@@ -51,11 +51,14 @@ vcov.seinfitR <- function(object, ...) {
 #' @export
 
 summary.seinfitR <- function(object, ...) {
+  r_squared = r_squared(object)
+
   cat("\nSeinhorst Model - Parameter Estimates\n")
   cat("-----------------------------------------------------\n")
   print(object$summary_seinfitR$coefficients)
   cat("-----------------------------------------------------\n")
-  cat()
+  cat("R2 - R squared (Coefficient of Determination): ", r_squared$R2, "\n")
+  cat("Adjusted_R2 - Adjusted R squared: ", r_squared$Adjusted_R2, "\n")
   cat("-----------------------------------------------------\n")
   invisible(object)
 }
@@ -87,13 +90,29 @@ r_squared.seinfitR <- function(object, ...) {
 
   adjusted_r_squared <- 1 - ((1 - r_squared) * (n - 1) / (n - p - 1))
 
-  class(r_squared) <- "r_squared.seinfitR"
-  class(adjusted_r_squared) <- "r_squared.seinfitR"
+  #class(r_squared) <- "r_squared.seinfitR"
+  #class(adjusted_r_squared) <- "r_squared.seinfitR"
 
-  cat("R squared (Coefficient of Determination): ", r_squared, "\n")
-  cat("Adjusted R squared: ", adjusted_r_squared, "\n")
+  return(list(
+    R2 = r_squared,
+    Adjusted_R2 = adjusted_r_squared
+  ))
+}
 
-  invisible(object)
+#-----------------------------------------------------------------------
+
+# coef method
+#' @rdname seinfitR-methods
+#' @export
+coef.seinfitR <- function(object, ...) {
+  coef_values <- coef(object$fit)
+
+  if (is.null(coef_values)) {
+    warning("The model should be run successfully first.")
+    return(NULL)
+  }
+
+  return(coef_values)
 }
 
 #-----------------------------------------------------------------------
