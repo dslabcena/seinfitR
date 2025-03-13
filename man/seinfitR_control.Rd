@@ -13,7 +13,8 @@ seinfitR_control(
   factor = 100,
   maxfev = integer(),
   maxiter = 50,
-  nprint = 0
+  nprint = 0,
+  trace = FALSE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ seinfitR_control(
 \item{maxiter}{Maximum number of iterations.}
 
 \item{nprint}{Controls printing of iteration details.}
+
+\item{trace}{A logical value indicating if a trace of the iteration progress should be printed.}
 }
 \value{
 A list of control parameters to be used in the \code{nlsLM} function during the

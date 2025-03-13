@@ -77,6 +77,10 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
   # Compute the maximum plant growth response (y_max) based on values where x_data <= t
   y_max <- mean(y_data[x_data <= start$t])
 
+  # Extract the control settings
+  control_list <- control$control
+  trace <- control$trace
+
   # Fit the Seinhorst model based on whether z is fixed
   fit <- tryCatch({
     if (z_fixed) {
@@ -86,11 +90,11 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
                         y_max,
                         (y_max * m) + (y_max * (1 - m) * 0.95^(x_data * t^(-1) - 1))),
         start = list(m = start$m, t = start$t, y_max = y_max),
-        control = control,
+        control = control_list,
         lower = c(0, min(x_data), min(x_data)),  # Lower bounds for parameter estimation
         upper = c(max(y_data), max(x_data), max(x_data)),  # Upper bounds
         algorithm = "LM",
-        trace = TRUE
+        trace = trace
       )
     } else {
       # If z is not fixed, estimate it along with the other parameters
@@ -99,11 +103,11 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
                         y_max,
                         (y_max * m) + (y_max * (1 - m) * z^(x_data - t))),
         start = list(m = start$m, t = start$t, z = start$z, y_max = y_max),
-        control = control,
+        control = control_list,
         lower = c(0, min(x_data), 0, min(x_data)),
         upper = c(max(y_data), max(x_data), 1, max(y_data)),
         algorithm = "LM",
-        trace = TRUE
+        trace = trace
       )
     }
   }, error = function(e) {

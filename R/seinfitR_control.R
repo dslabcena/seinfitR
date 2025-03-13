@@ -13,6 +13,7 @@
 #' @param maxfev Maximum number of function evaluations.
 #' @param maxiter Maximum number of iterations.
 #' @param nprint Controls printing of iteration details.
+#' @param trace A logical value indicating if a trace of the iteration progress should be printed.
 #'
 #' @return A list of control parameters to be used in the \code{nlsLM} function during the
 #' fitting of the Seinhorst model using \code{seinfitR}.
@@ -25,7 +26,8 @@ seinfitR_control <- function(ftol = sqrt(.Machine$double.eps),
                              factor = 100,
                              maxfev = integer(),
                              maxiter = 50,
-                             nprint = 0) {
+                             nprint = 0,
+                             trace = FALSE) {
 
   control_list <- list(
     ftol = ftol,
@@ -39,5 +41,5 @@ seinfitR_control <- function(ftol = sqrt(.Machine$double.eps),
     nprint = nprint
   )
 
-  return(control_list)
+  return(list(control = control_list, trace = trace))
 }
