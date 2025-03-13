@@ -106,5 +106,5 @@ methods(class = "seinfitR")
 License
 
 The seinfitR package is licensed under the GNU General Public License,
-version 3, see file LICENSE.md. © 2024 Deoclecio J. Amorim & João
+version 3, see file LICENSE.md. © 2025 Deoclecio J. Amorim & João
 Novoletti.
