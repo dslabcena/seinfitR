@@ -4,10 +4,12 @@
 \alias{plot.seinfitR}
 \title{Plot method for seinfitR objects}
 \usage{
-\method{plot}{seinfitR}(x, ...)
+\method{plot}{seinfitR}(x, rel = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
+
+\item{rel}{Logical. If \code{TRUE}, make a graph of the relative model.}
 
 \item{\dots}{currently unused.}
 }
