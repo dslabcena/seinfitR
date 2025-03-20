@@ -28,7 +28,7 @@ plot.seinfitR <- function(x, rel=FALSE, ...) {
   # Plot normalized values (relative mode)
   if (rel) {
     plot(data[[x_var]], data[[y_var]] / max(fitted_values), log = "x",
-         main = "Seinhorst Model", xlab = x_var, ylab = "Relative " ~ y_var,
+         main = "Seinhorst Model", xlab = x_var, ylab = paste("Relative ", y_var),
          col = "blue", pch = 16, type = "p")
     lines(data[[x_var]], fitted_values / max(fitted_values), col = "red", lwd = 2)
   } else {
