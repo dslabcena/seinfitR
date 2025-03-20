@@ -37,6 +37,7 @@ library(seinfitR)
 
 data(glasshouse, package = "seinfitR")
 
+
 # Fit the model
 model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
                   start = list(m = 6, t = 6),
