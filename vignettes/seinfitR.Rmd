@@ -1,0 +1,109 @@
+---
+title: "Introduction to seinfitR"
+author: "Deoclecio Amorim & João Novoletti"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{seinfitR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Installation
+
+You can install the development version of seinfitR from
+[GitHub](https://github.com/dslabcena/seinfitR) with:
+
+```r
+# install.packages("pak")
+pak::pak("dslabcena/seinfitR")
+```
+
+## Overview
+
+The **seinfitR** package is designed for fitting the Seinhorst equation to experimental data describing the relationship between preplant nematode densities and plant growth. The package provides nonlinear least squares fitting and useful methods for model evaluation and visualization.
+
+## Example Analysis
+
+### Load Sample Data
+
+We will use the **glasshouse** dataset included in the package:
+
+```{r data}
+library(seinfitR)
+
+data(glasshouse, package = "seinfitR")
+```
+
+### Fit the Seinhorst Model
+
+We fit the model using the **seinfitR()** function, specifying initial parameter values and controlling iteration limits:
+
+```{r model_fit}
+model <- seinfitR(
+  p_i = "p_i", 
+  y = "y", 
+  data = glasshouse,
+  start = list(m = 6, t = 6),
+  control = seinfitR_control(maxiter = 20),
+  z_fixed = TRUE
+)
+```
+
+### Model Result Details
+
+The result of the `seinfitR()` function returns a list containing several important elements related to the fitted model:
+
+```
+- fit: The fitted model object, which can be further analyzed or extracted.
+- summary_seinfitR: A summary of the fitted model, providing details about parameter estimates and statistical significance.
+- cov: The covariance matrix of the parameter estimates, if available.
+- data: The original dataset used for fitting the model.
+- x: The name of the predictor variable (e.g., preplant nematode density).
+- y: The name of the response variable (e.g., plant growth).
+- z_fixed: A boolean indicating whether the `z` parameter was fixed during model fitting.
+If `TRUE`, the function uses the default value for ( z^t ), as described in
+Seinhorst, J. W. (1986). Effects of nematode attack on the growth and yield of crop plants. In Cyst nematodes (pp. 191-209). Springer US.
+```
+
+### Model Summary
+
+```{r summary}
+summary(model)
+```
+
+### Extract Model Coefficients
+
+```{r coefficients}
+coef(model)
+
+coef <- coef(model)
+
+m <- coef[1]
+t <- coef[2]
+y_max <- coef[3]
+
+cat("m:", m)
+cat("t:", t)
+cat("y_max", y_max)
+```
+
+### Visualizing the Model Fit
+
+The fitted model can be visualized using built-in plotting functions:
+
+```{r plot}
+plot(model, main = "Seinhorst Model Fit for Glasshouse Data")
+```
+
+---
+For further details, refer to the official [GitHub repository](https://github.com/dslabcena/seinfitR).
+
