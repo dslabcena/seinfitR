@@ -43,6 +43,8 @@
 
 
 seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, control = seinfitR_control()) {
+  #Add check if p_i (preditor) and y is specified
+  #Inform the consequences of passing z in start and still use z_fixed
 
   # Check if the specified column names exist in the dataset
   if (!(p_i %in% names(data)) || !(y %in% names(data))) {
