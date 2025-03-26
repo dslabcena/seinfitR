@@ -5,9 +5,9 @@
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
 seinfitR(
-  p_i = "x",
-  y = "y",
-  data,
+  p_i = NULL,
+  y = NULL,
+  data = NULL,
   start = NULL,
   z_fixed = FALSE,
   control = seinfitR_control()

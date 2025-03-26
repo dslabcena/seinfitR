@@ -9,6 +9,7 @@
 #'
 #' @return A data frame with the independent variable and the corresponding predicted values.
 #' @export
+
 predict.seinfitR <- function(object, newdata = NULL, ...) {
   # If newdata is NULL, use the original dataset
   if (is.null(newdata)) {
@@ -22,8 +23,14 @@ predict.seinfitR <- function(object, newdata = NULL, ...) {
 
   new_x <- newdata[[object$x]]
 
+
+  #new_x <- append(new_x, coef(object)["t"])
+
+  #cat(unlist(new_x))
+
+
   # Compute predictions
   predictions <- predict(object$fit, newdata = newdata, ...)
 
-  return(data.frame(x = new_x, predicted = predictions))
+  return()
 }

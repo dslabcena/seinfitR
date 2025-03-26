@@ -42,9 +42,19 @@
 
 
 
-seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, control = seinfitR_control()) {
-  #Add check if p_i (preditor) and y is specified
-  #Inform the consequences of passing z in start and still use z_fixed
+seinfitR <- function(p_i = NULL, y = NULL, data = NULL, start = NULL, z_fixed = FALSE, control = seinfitR_control()) {
+  #Check for data argument
+  if (missing(data)){
+    stop("Error: The 'data' argument is missing. Please provide a data frame containing the experimental data.")
+  }
+
+  #Check if p_i (preditor) and y (dependent) is specified
+  if (is.null(p_i)){
+    p_i <- readline(prompt = "Please enter the value for p_i (Predictor variable) in your data frame: ")
+  }
+  if (is.null(y)){
+    y <- readline(prompt = "Please enter the value for y (Dependent variable) in your data frame: ")
+  }
 
   # Check if the specified column names exist in the dataset
   if (!(p_i %in% names(data)) || !(y %in% names(data))) {
@@ -86,6 +96,8 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
   # Fit the Seinhorst model based on whether z is fixed
   fit <- tryCatch({
     if (z_fixed) {
+
+      cat("Z_fixed option is True: the default value for z^t described by Seinhorst (1986) was used.\n")
       # If z is fixed, use the predefined value in the model equation
       nlsLM(
         y_data ~ ifelse(x_data <= t,
@@ -128,6 +140,8 @@ seinfitR <- function(p_i = "x", y = "y", data, start = NULL, z_fixed = FALSE, co
   )
 
   class(result) <- "seinfitR"  # Assign custom class for the result object
+
+  cat("Model fitting successful\n")
   return(result)
 }
 
