@@ -17,5 +17,5 @@
 #'
 #' @source <https://osf.io/pm94t>
 #'
-#' @references Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in *Acmella oleracea* caused by the foliar nematode *Aphelenchoides pseudobesseyi*. *J Plant Dis Prot*, 131, 1707–1720. <https://doi.org/10.1007/s41348-024-00982-2>
+#' @references Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in *Acmella oleracea* caused by the foliar nematode *Aphelenchoides pseudobesseyi*. *J Plant Dis Prot*, 131, 1707–1720. \doi{10.1007/s41348-024-00982-2}
 "jambu"

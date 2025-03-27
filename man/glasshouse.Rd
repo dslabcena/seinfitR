@@ -20,6 +20,6 @@ One cultivar was used, and 14 different nematode population densities (\code{p_i
 Each density was replicated five times. The dataset provides the nematode densities and the corresponding average plant yield.
 }
 \references{
-Schomaker, C., & Been, T. (2013). Plant growth and population dynamics. \emph{Plant Nematology}, 301-330. \url{https://doi.org/10.1079/9781780641515.0301}
+Schomaker, C., & Been, T. (2013). Plant growth and population dynamics. \emph{Plant Nematology}, 301-330. \doi{10.1079/9781780641515.0301}
 }
 \keyword{datasets}

@@ -27,6 +27,6 @@ The model parameters \code{t}, \code{m}, and \code{z} obtained from the raw data
 This dataset is used in the \code{seinfitR} package to study the relationship between nematode populations and plant growth.
 }
 \references{
-Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in \emph{Acmella oleracea} caused by the foliar nematode \emph{Aphelenchoides pseudobesseyi}. \emph{J Plant Dis Prot}, 131, 1707–1720. \url{https://doi.org/10.1007/s41348-024-00982-2}
+Silva, M.F., Faccioli, F.C., Honório, A.P. et al. (2024). First report of angular leaf spot in \emph{Acmella oleracea} caused by the foliar nematode \emph{Aphelenchoides pseudobesseyi}. \emph{J Plant Dis Prot}, 131, 1707–1720. \doi{10.1007/s41348-024-00982-2}
 }
 \keyword{datasets}
