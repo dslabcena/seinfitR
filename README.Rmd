@@ -39,7 +39,7 @@ The syntax of seinfitR is straightforward, with the main function being seinfitR
 
 ## Example
 
-Modeling plant response to nematode densities using the "jambu" dataset:
+Modeling plant response to nematode densities using the "glasshouse" dataset:
 
 ```{r example}
 library(seinfitR)

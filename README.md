@@ -30,7 +30,8 @@ seinfitR(…).
 
 ## Example
 
-Modeling plant response to nematode densities using the “jambu” dataset:
+Modeling plant response to nematode densities using the “glasshouse”
+dataset:
 
 ``` r
 library(seinfitR)
@@ -42,6 +43,8 @@ data(glasshouse, package = "seinfitR")
 model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
                   start = list(m = 6, t = 6),
                   control = seinfitR_control(maxiter = 20), z_fixed = TRUE)
+#> Z_fixed option is True: the default value for z^t described by Seinhorst (1986) was used.
+#> Model fitting successful
 
 # View model summary
 summary(model)
