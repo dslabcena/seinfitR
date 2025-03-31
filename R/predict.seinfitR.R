@@ -21,6 +21,8 @@ predict.seinfitR <- function(object, newdata = NULL, ...) {
     stop("New dataset must contain the independent variable: ", object$x)
   }
 
+  new_x <- newdata[[object$x]]
+
   # Compute predictions
   predictions <- predict(object$fit, newdata = newdata, ...)
 
