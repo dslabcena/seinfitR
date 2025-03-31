@@ -2,9 +2,11 @@ Package: seinfitR
 Title: Modeling the Relationship Between Nematode Densities and Plant Growth
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Deoclecio", "Amorim", NULL, "amorim@cena.usp.br", role = "aut"),
-    person("João", "Novoletti", NULL, "joao.novoletti@gmail.com", role = c("aut", "cre")))
-Description: Models the relationship between preplant nematode densities and plant growth by fitting the Seinhorst equation using nonlinear least squares estimation.
+    person("Deoclecio", "Amorim", NULL, "amorim@cena.usp.br", role = "aut", "cph"),
+    person("João", "Novoletti", NULL, "joao.novoletti@gmail.com", role = c("aut", "cre", "cph")))
+Description: Models the relationship between preplant nematode densities
+    and plant growth by fitting the Seinhorst equation using 
+    nonlinear least squares estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
