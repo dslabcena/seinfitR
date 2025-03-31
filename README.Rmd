@@ -1,0 +1,89 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# seinfitR:  Modeling the Relationship Between Nematode Densities and Plant Growth
+
+Authors:
+
+Deoclecio Amorim - amorim@cena.usp.br, CENA-USP
+
+João Novoletti - joao.novoletti@gmail.com
+
+The goal of seinfitR is to fit the Seinhorst equation to experimental data describing the relationship between preplant nematode densities and plant growth using nonlinear least squares fitting.
+
+
+## Installation
+
+You can install the development version of seinfitR from [GitHub](https://github.com/dslabcena/seinfitR) with:
+
+``` r
+# install.packages("pak")
+pak::pak("dslabcena/seinfitR")
+```
+
+Alternatively, if you'd like to install the stable version of seinfitR from CRAN, run:
+
+``` r
+install.packages("seinfitR")
+``` 
+## Basic Use
+
+The syntax of seinfitR is straightforward, with the main function being seinfitR(...).
+
+## Example
+
+Modeling plant response to nematode densities using the "glasshouse" dataset:
+
+```{r example}
+library(seinfitR)
+
+data(glasshouse, package = "seinfitR")
+
+
+# Fit the model
+model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
+                  start = list(m = 6, t = 6),
+                  control = seinfitR_control(maxiter = 20), z_fixed = TRUE)
+
+# View model summary
+summary(model)
+```
+
+The seinfitR package provides some methods for model evaluation and visualization:
+
+```{r methods}
+# Print model coefficients
+print(model)
+
+# Extract variance-covariance matrix
+vcov(model)
+
+#Extract model coefficients
+coef(model)
+
+# Calculate R-squared
+r_squared(model)
+
+# Calculate Plot
+plot(model)
+```
+
+Methods Available for seinfitR Objects
+```{r show_methods}
+methods(class = "seinfitR")
+```
+License
+
+The seinfitR package is licensed under the GNU General Public License, version 3, see file LICENSE.md. © 2025 Deoclecio J. Amorim & João Novoletti.

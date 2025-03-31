@@ -4,36 +4,55 @@
 \alias{seinfitR}
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
-seinfitR(data, start = NULL, control = seinfitR_control(maxiter = 100))
+seinfitR(
+  p_i = NULL,
+  y = NULL,
+  data = NULL,
+  start = NULL,
+  z_fixed = FALSE,
+  control = seinfitR_control()
+)
 }
 \arguments{
-\item{data}{A data frame containing the experimental data. It should include at least
-two columns: \code{x} (preplant nematode densities) and \code{y} (plant growth response).}
+\item{p_i}{A character string specifying the column name in \code{data} that contains preplant nematode densities.}
 
-\item{start}{A list of starting values for the parameters \code{m}, \code{t}, and \code{z}. These values
+\item{y}{A character string specifying the column name in \code{data} that contains the plant growth response.}
+
+\item{data}{A data frame containing the experimental data. It must include at least two columns:
+one representing the preplant nematode densities (\code{p_i}) and another representing the plant growth response (\code{y}).}
+
+\item{start}{A list of initial parameter values for \code{m}, \code{t}, and \code{z} (if \code{z_fixed = FALSE}). These values
 are used to initialize the nonlinear least squares fitting process.}
 
-\item{control}{control}
+\item{z_fixed}{Logical. If \code{TRUE}, the function uses the default value for \( z^t \), as described in
+Seinhorst, J. W. (1986). \emph{Effects of nematode attack on the growth and yield of crop plants}. In \emph{Cyst nematodes} (pp. 191-209). Springer US.}
+
+\item{control}{A control object created using \code{seinfitR_control()}, which specifies options for the optimization process.}
 }
 \value{
-An object of class \code{nls}, which contains the results of the nonlinear least squares fitting,
-including estimated parameters and residuals.
+A list of class \code{"seinfitR"} containing:
+\item{fit}{An object of class \code{nls} with the fitted model.}
+\item{summary_seinfitR}{Summary statistics of the fitted model.}
+\item{cov}{The covariance matrix of parameter estimates (if available).}
+\item{data}{The original dataset used for fitting.}
+\item{r_squared}{The coefficient of determination (\( R^2 \)) indicating model fit quality.}
+\item{x}{The name of the predictor variable used (\code{p_i}).}
+\item{y}{The name of the response variable used (\code{y}).}
+\item{z_fixed}{Logical value indicating whether \code{z} was fixed.}
 }
 \description{
-This function fits the Seinhorst equation to experimental data on the relationship between
-preplant nematode densities and plant growth using nonlinear least squares fitting.
-The function uses the \code{nlsLM} function from the \code{minpack.lm} package to estimate the parameters
-of the model.
+This function fits the Seinhorst equation to experimental data describing the relationship
+between preplant nematode densities and plant growth using nonlinear least squares fitting.
+The fitting process is performed using the \code{nlsLM} function from the \code{minpack.lm} package.
 }
 \examples{
-library("readxl")
-# Load example data from the inst/extdata folder
-data <- read_excel(system.file("extdata", "raw_data_pathogenicity_test.xlsx", package = "seinfitR"))
-colnames(data)[5] ="y"
-colnames(data)[1] ="x"
+# Example: Modeling plant response to nematode densities using "jambu" dataset
 
-# Fit the model using seinfitR with initial parameter values and control settings
-seinfitR(data = data, start = list(m = 0.103, t = 250, z = 0.991),
-         control = seinfitR_control(maxiter = 100))
+# Fit the model using seinfitR with specified initial values
+model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
+                  start = list(m = 0.103, t = 250, z = 0.991),
+                  control = seinfitR_control(maxiter = 5))
 
+# View model summary
+summary(model)
 }
