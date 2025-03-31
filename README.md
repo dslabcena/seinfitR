@@ -1,5 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/dslabcena/seinfitR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dslabcena/seinfitR/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 # seinfitR: Modeling the Relationship Between Nematode Densities and Plant Growth
 
