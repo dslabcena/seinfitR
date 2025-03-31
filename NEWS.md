@@ -1,3 +1,3 @@
-# seinfitR (development version)
+# seinfitR 1.0.0
 
 * Initial CRAN submission.
