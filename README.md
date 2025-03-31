@@ -23,6 +23,13 @@ You can install the development version of seinfitR from
 pak::pak("dslabcena/seinfitR")
 ```
 
+Alternatively, if you’d like to install the stable version of seinfitR
+from CRAN, run:
+
+``` r
+install.packages("seinfitR")
+```
+
 ## Basic Use
 
 The syntax of seinfitR is straightforward, with the main function being
