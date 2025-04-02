@@ -29,6 +29,21 @@ r_squared(object, ...)
 
 \item{object}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
 }
+\value{
+No return value, called for side effects
+
+A matrix representing the covariance of the estimated coefficients.
+
+No return value, called for side effects
+
+A list with the following components:
+\describe{
+\item{R2}{The coefficient of determination (R-squared).}
+\item{Adjusted_R2}{The adjusted R-squared value.}
+}
+
+A named numeric vector containing the estimated model coefficients.
+}
 \description{
 Methods for 'seinfitR' objects
 }

@@ -14,17 +14,17 @@ NULL
 
 # Print method
 #' @rdname seinfitR-methods
+#' @return No return value, called for side effects
 #' @export
-
 print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   cat("\nSeinhorst Model Fit Summary\n")
   cat("-----------------------------------------------------\n")
   cat("Dependent Variable:", x$y, "\n")
   cat("Predictor Variable:", x$x, "\n")
   cat("Number of Observations:", nrow(x$data), "\n\n")
-
+  
   print(x$summary_seinfitR$coefficients)
-
+  
   cat("-----------------------------------------------------\n")
   invisible(x)
 }
@@ -33,14 +33,14 @@ print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
 
 # vcov method
 #' @rdname seinfitR-methods
+#' @return A matrix representing the covariance of the estimated coefficients.
 #' @export
-
 vcov.seinfitR <- function(object, ...) {
   vc <- vcov(object$fit)
   if (is.null(vc)) {
     warning("Covariance matrix not available.")
   }
-
+  
   return(vc)
 }
 
@@ -48,11 +48,11 @@ vcov.seinfitR <- function(object, ...) {
 
 # Summary method
 #' @rdname seinfitR-methods
+#' @return No return value, called for side effects
 #' @export
-
 summary.seinfitR <- function(object, ...) {
   r_squared = r_squared(object)
-
+  
   cat("\nSeinhorst Model - Parameter Estimates\n")
   cat("-----------------------------------------------------\n")
   print(object$summary_seinfitR$coefficients)
@@ -67,32 +67,31 @@ summary.seinfitR <- function(object, ...) {
 
 # r_squared method
 #' @rdname seinfitR-methods
+#' @return A list with the following components:
+#' \describe{
+#'   \item{R2}{The coefficient of determination (R-squared).}
+#'   \item{Adjusted_R2}{The adjusted R-squared value.}
+#' }
 #' @export r_squared
 r_squared <- function(object, ...) UseMethod("r_squared")
 
-#'@export
-
+#' @export
 r_squared.seinfitR <- function(object, ...) {
-
   if (!inherits(object, "seinfitR")) {
     stop("Object is not of class 'seinfitR'")
   }
-
+  
   fitted_values <- predict(object$fit)
-
+  
   ss_total <- sum((object$data[[object$y]] - mean(object$data[[object$y]]))^2)
   ss_residual <- sum((object$data[[object$y]] - fitted_values)^2)
   r_squared <- 1 - (ss_residual / ss_total)
-
-
+  
   n <- nrow(object$data)
   p <- length(coef(object$fit)) - 1
-
+  
   adjusted_r_squared <- 1 - ((1 - r_squared) * (n - 1) / (n - p - 1))
-
-  #class(r_squared) <- "r_squared.seinfitR"
-  #class(adjusted_r_squared) <- "r_squared.seinfitR"
-
+  
   return(list(
     R2 = r_squared,
     Adjusted_R2 = adjusted_r_squared
@@ -103,16 +102,15 @@ r_squared.seinfitR <- function(object, ...) {
 
 # coef method
 #' @rdname seinfitR-methods
+#' @return A named numeric vector containing the estimated model coefficients.
 #' @export
 coef.seinfitR <- function(object, ...) {
   coef_values <- coef(object$fit)
-
+  
   if (is.null(coef_values)) {
     warning("The model should be run successfully first.")
     return(NULL)
   }
-
+  
   return(coef_values)
 }
-
-#-----------------------------------------------------------------------

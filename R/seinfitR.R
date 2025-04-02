@@ -19,7 +19,6 @@
 #' \item{summary_seinfitR}{Summary statistics of the fitted model.}
 #' \item{cov}{The covariance matrix of parameter estimates (if available).}
 #' \item{data}{The original dataset used for fitting.}
-#' \item{r_squared}{The coefficient of determination (\( R^2 \)) indicating model fit quality.}
 #' \item{x}{The name of the predictor variable used (`p_i`).}
 #' \item{y}{The name of the response variable used (`y`).}
 #' \item{z_fixed}{Logical value indicating whether `z` was fixed.}
