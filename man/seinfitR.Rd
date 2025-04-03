@@ -18,7 +18,7 @@ one representing the preplant nematode densities (\code{p_i}) and another repres
 are used to initialize the nonlinear least squares fitting process.}
 
 \item{z_fixed}{Logical. If \code{TRUE}, the function uses the default value for \( z^t \), as described in
-Seinhorst, J. W. (1986). \emph{Effects of nematode attack on the growth and yield of crop plants}. In \emph{Cyst nematodes} (pp. 191-209). Springer US.}
+Seinhorst (1986) \doi{10.1007/978-1-4613-2251-1_11}}
 
 \item{control}{A control object created using \code{seinfitR_control()}, which specifies options for the optimization process.}
 }
