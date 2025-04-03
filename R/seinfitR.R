@@ -11,7 +11,7 @@
 #' @param start A list of initial parameter values for `m`, `t`, and `z` (if `z_fixed = FALSE`). These values
 #' are used to initialize the nonlinear least squares fitting process.
 #' @param z_fixed Logical. If `TRUE`, the function uses the default value for \( z^t \), as described in
-#' Seinhorst, J. W. (1986). *Effects of nematode attack on the growth and yield of crop plants*. In *Cyst nematodes* (pp. 191-209). Springer US.
+#' Seinhorst (1986) \doi{10.1007/978-1-4613-2251-1_11}
 #' @param control A control object created using `seinfitR_control()`, which specifies options for the optimization process.
 #'
 #' @return A list of class `"seinfitR"` containing:
@@ -41,71 +41,55 @@
 
 
 
-seinfitR <- function(p_i = NULL, y = NULL, data = NULL, start = NULL, z_fixed = FALSE, control = seinfitR_control()) {
-  #Check for data argument
-  if (missing(data)){
+seinfitR <- function(p_i, y, data, start, z_fixed = FALSE, control = seinfitR_control()) {
+  # Check for required arguments
+  if (missing(data)) {
     stop("Error: The 'data' argument is missing. Please provide a data frame containing the experimental data.")
   }
-
-  #Check if p_i (preditor) and y (dependent) is specified
-  if (is.null(p_i)){
-    p_i <- readline(prompt = "Please enter the value for p_i (Predictor variable) in your data frame: ")
+  if (missing(p_i) || missing(y)) {
+    stop("Error: Both 'p_i' (predictor variable) and 'y' (dependent variable) must be specified.")
   }
-  if (is.null(y)){
-    y <- readline(prompt = "Please enter the value for y (Dependent variable) in your data frame: ")
+  if (!is.list(start) || length(start) < 2) {
+    stop("Error: The 'start' parameter must be a list with initial values for model parameters.")
+  }
+  if (z_fixed == FALSE && (!is.list(start) || is.null(start$z))) {
+    stop("Error: The 'start' list must include an initial value for 'z' when 'z_fixed' is FALSE.")
   }
 
-  # Check if the specified column names exist in the dataset
+  # Check if specified column names exist in the dataset
   if (!(p_i %in% names(data)) || !(y %in% names(data))) {
-    stop("The specified columns do not exist in the dataset.")
+    stop("Error: The specified columns do not exist in the dataset.")
   }
 
   # Extract the corresponding columns from the dataset
   x_data <- data[[p_i]]
   y_data <- data[[y]]
 
-  # Ensure that values are numeric and contain no missing values (NA)
+  # Ensure numeric values without NAs
   if (!is.numeric(x_data) || !is.numeric(y_data) || anyNA(x_data) || anyNA(y_data)) {
-    stop("The selected columns must contain only numeric values and cannot have NAs.")
+    stop("Error: The selected columns must contain only numeric values and cannot have NAs.")
   }
 
-  # If no starting values are provided, request user input
-  if (is.null(start) && !z_fixed) {
-    m <- as.numeric(readline(prompt = "Please enter the value for m: "))
-    t <- as.numeric(readline(prompt = "Please enter the value for t: "))
-    z <- as.numeric(readline(prompt = "Please enter the value for z: "))
-
-    start <- list(m = m, t = t, z = z)
-  }
-
-  if (is.null(start) && z_fixed) {
-    m <- as.numeric(readline(prompt = "Please enter the value for m: "))
-    t <- as.numeric(readline(prompt = "Please enter the value for t: "))
-
-    start <- list(m = m, t = t)
-  }
-
-  # Compute the maximum plant growth response (y_max) based on values where x_data <= t
+  # Compute the maximum plant growth response (y_max) for x_data <= t
   y_max <- mean(y_data[x_data <= start$t])
 
   # Extract the control settings
   control_list <- control$control
   trace <- control$trace
 
-  # Fit the Seinhorst model based on whether z is fixed
+  # Fit the Seinhorst model
   fit <- tryCatch({
     if (z_fixed) {
-
-      cat("Z_fixed option is True: the default value for z^t described by Seinhorst (1986) was used.\n")
       # If z is fixed, use the predefined value in the model equation
+      message("Z_fixed is TRUE: using the default value for z^t from Seinhorst (1986).")
       nlsLM(
         y_data ~ ifelse(x_data <= t,
                         y_max,
                         (y_max * m) + (y_max * (1 - m) * 0.95^(x_data * t^(-1) - 1))),
         start = list(m = start$m, t = start$t, y_max = y_max),
         control = control_list,
-        lower = c(0, min(x_data), min(x_data)),  # Lower bounds for parameter estimation
-        upper = c(max(y_data), max(x_data), max(x_data)),  # Upper bounds
+        lower = c(0, min(x_data), min(x_data)),  
+        upper = c(max(y_data), max(x_data), max(x_data)),  
         algorithm = "LM",
         trace = trace
       )
@@ -127,20 +111,21 @@ seinfitR <- function(p_i = NULL, y = NULL, data = NULL, start = NULL, z_fixed = 
     stop("Error in model fitting: ", e$message)
   })
 
-  # Create the result object with relevant model details
+  # Create the result object
   result <- list(
-    fit = fit,  # Fitted model object
-    summary_seinfitR = summary(fit),  # Model summary
-    cov = tryCatch(vcov(fit), error = function(e) NULL),  # Covariance matrix (if available)
-    data = data,  # Original dataset
-    x = p_i,  # Name of predictor variable
-    y = y,  # Name of response variable
-    z_fixed = z_fixed  # Whether z was fixed during fitting
+    fit = fit,  
+    summary_seinfitR = summary(fit),  
+    cov = tryCatch(vcov(fit), error = function(e) NULL),  
+    data = data,  
+    x = p_i,  
+    y = y,  
+    z_fixed = z_fixed  
   )
 
-  class(result) <- "seinfitR"  # Assign custom class for the result object
+  class(result) <- "seinfitR"  
 
-  cat("Model fitting successful\n")
+  message("Model fitting completed successfully.")
   return(result)
 }
+
 

@@ -1,9 +1,8 @@
 #' Plot method for seinfitR objects
-#'
-#' This function generates a scatter plot of the observed data along with the fitted SEINH model.
-#'
+#' 
+#' @title Plot SeinfitR
 #' @param x An object of class `seinfitR` (output from `seinfitR()`).
-#' @param rel Logical. If `TRUE`, make a graph of the relative model.
+#' @param rel Logical. If TRUE, the observed and fitted values are plotted relative to the maximum fitted value (normalized between 0 and 1). If FALSE, the original observed and fitted values are plotted.
 #' @param \dots currently unused.
 #'
 #' @return A plot showing the observed data (blue points) and the fitted curve (red line).
@@ -18,9 +17,6 @@ plot.seinfitR <- function(x, rel=FALSE, ...) {
 
   # Adjust zero values on the x-axis
   data[[x_var]] <- ifelse(data[[x_var]] == 0, min(data[[x_var]][data[[x_var]] > 0]) / 10, data[[x_var]])
-
-  # Set options to avoid scientific notation
-  options(scipen=3)
 
   min_x <- min(data[[x_var]], na.rm = TRUE)
   max_x <- max(data[[x_var]], na.rm = TRUE)

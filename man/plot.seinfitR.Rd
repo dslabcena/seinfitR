@@ -2,14 +2,14 @@
 % Please edit documentation in R/plot.seinfitR.R
 \name{plot.seinfitR}
 \alias{plot.seinfitR}
-\title{Plot method for seinfitR objects}
+\title{Plot SeinfitR}
 \usage{
 \method{plot}{seinfitR}(x, rel = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{seinfitR} (output from \code{seinfitR()}).}
 
-\item{rel}{Logical. If \code{TRUE}, make a graph of the relative model.}
+\item{rel}{Logical. If TRUE, the observed and fitted values are plotted relative to the maximum fitted value (normalized between 0 and 1). If FALSE, the original observed and fitted values are plotted.}
 
 \item{\dots}{currently unused.}
 }
@@ -17,5 +17,5 @@
 A plot showing the observed data (blue points) and the fitted curve (red line).
 }
 \description{
-This function generates a scatter plot of the observed data along with the fitted SEINH model.
+Plot method for seinfitR objects
 }

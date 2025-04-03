@@ -4,14 +4,7 @@
 \alias{seinfitR}
 \title{Fit the Seinhorst Model to Experimental Data}
 \usage{
-seinfitR(
-  p_i = NULL,
-  y = NULL,
-  data = NULL,
-  start = NULL,
-  z_fixed = FALSE,
-  control = seinfitR_control()
-)
+seinfitR(p_i, y, data, start, z_fixed = FALSE, control = seinfitR_control())
 }
 \arguments{
 \item{p_i}{A character string specifying the column name in \code{data} that contains preplant nematode densities.}
