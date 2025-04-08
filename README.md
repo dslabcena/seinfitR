@@ -53,7 +53,7 @@ data(glasshouse, package = "seinfitR")
 # Fit the model
 model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
                   start = list(m = 6, t = 6),
-                  control = seinfitR.control(maxiter = 20), z_fixed = TRUE)
+                  control = seinfitR_control(maxiter = 20), z_fixed = TRUE)
 #> The Z_fixed parameter is set to TRUE: using the default value for z^t from Seinhorst (1986).
 #> Model fitting completed successfully.
 
