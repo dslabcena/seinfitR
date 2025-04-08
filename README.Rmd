@@ -69,7 +69,7 @@ summary(model)
 The seinfitR package provides some methods for model evaluation and visualization:
 
 ```{r methods}
-# Print model coefficients
+# Print model dependent/predictor variables, number of observations, and parameter estimates
 print(model)
 
 # Extract variance-covariance matrix

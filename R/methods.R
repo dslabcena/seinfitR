@@ -9,13 +9,14 @@
 #' @seealso \code{\link{seinfitR}}
 #' @export
 print.seinfitR <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
-  cat("Seinhorst Model Fit Summary\n\n")
+  cat("Seinhorst Model Fit Summary\n")
+  cat("-----------------------------------------------------\n")
   cat("Dependent Variable:             ", x$y, "\n")
   cat("Predictor Variable:             ", x$x, "\n")
   cat("Number of Observations:         ", nrow(x$data), "\n\n")
   cat("Coefficients:\n")
   print(x$summary_seinfitR$coefficients, digits = digits)
-  cat("\n")
+  cat("-----------------------------------------------------\n")
 }
 
 #' Compute variance-covariance matrix for seinfitR model.
@@ -44,11 +45,13 @@ vcov.seinfitR <- function(object, ...) {
 #' @export
 summary.seinfitR <- function(object, ...) {
   r_sq <- r_squared(object)
-  cat("Seinhorst Model - Parameter Estimates\n\n")
+  cat("Seinhorst Model - Parameter Estimates\n")
+  cat("-----------------------------------------------------\n")
   print(object$summary_seinfitR$coefficients)
-  cat("\nModel Fit Metrics:\n")
-  cat("R squared (Coefficient of Determination): ", r_sq$R2, "\n")
-  cat("Adjusted R squared:                      ", r_sq$Adjusted_R2, "\n")
+  cat("-----------------------------------------------------\n")
+  cat("R2 - R squared (Coefficient of Determination): ", r_sq$R2, "\n")
+  cat("Adjusted_R2 - Adjusted R squared:              ", r_sq$Adjusted_R2, "\n")
+  cat("-----------------------------------------------------\n")
 }
 
 #' Compute R-squared for seinfitR model.

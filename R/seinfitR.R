@@ -80,7 +80,7 @@ seinfitR <- function(p_i, y, data, start, z_fixed = FALSE, control = seinfitR.co
   fit <- tryCatch({
     if (z_fixed) {
       # If z is fixed, use the predefined value in the model equation
-      message("Z_fixed is TRUE: using the default value for z^t from Seinhorst (1986).")
+      message("The Z_fixed parameter is set to TRUE: using the default value for z^t from Seinhorst (1986).")
       nlsLM(
         y_data ~ ifelse(x_data <= t,
                         y_max,

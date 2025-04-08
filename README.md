@@ -54,12 +54,11 @@ data(glasshouse, package = "seinfitR")
 model <- seinfitR(p_i = "p_i", y = "y", data = glasshouse,
                   start = list(m = 6, t = 6),
                   control = seinfitR.control(maxiter = 20), z_fixed = TRUE)
-#> Z_fixed option is True: the default value for z^t described by Seinhorst (1986) was used.
-#> Model fitting successful
+#> The Z_fixed parameter is set to TRUE: using the default value for z^t from Seinhorst (1986).
+#> Model fitting completed successfully.
 
 # View model summary
 summary(model)
-#> 
 #> Seinhorst Model - Parameter Estimates
 #> -----------------------------------------------------
 #>         Estimate  Std. Error   t value     Pr(>|t|)
@@ -68,7 +67,7 @@ summary(model)
 #> y_max 10.3675895 0.053752628 192.87596 9.127161e-21
 #> -----------------------------------------------------
 #> R2 - R squared (Coefficient of Determination):  0.9949782 
-#> Adjusted_R2 - Adjusted R squared:  0.9940652 
+#> Adjusted_R2 - Adjusted R squared:               0.9940652 
 #> -----------------------------------------------------
 ```
 
@@ -76,19 +75,19 @@ The seinfitR package provides some methods for model evaluation and
 visualization:
 
 ``` r
-# Print model coefficients
+# Print model dependent/predictor variables, number of observations, and parameter estimates
 print(model)
-#> 
 #> Seinhorst Model Fit Summary
 #> -----------------------------------------------------
-#> Dependent Variable: y 
-#> Predictor Variable: p_i 
-#> Number of Observations: 14 
+#> Dependent Variable:              y 
+#> Predictor Variable:              p_i 
+#> Number of Observations:          14 
 #> 
-#>         Estimate  Std. Error   t value     Pr(>|t|)
-#> m      0.5951683 0.008177824  72.77832 4.096851e-16
-#> t      1.6829177 0.116059892  14.50042 1.627030e-08
-#> y_max 10.3675895 0.053752628 192.87596 9.127161e-21
+#> Coefficients:
+#>       Estimate Std. Error t value  Pr(>|t|)
+#> m       0.5952   0.008178   72.78 4.097e-16
+#> t       1.6829   0.116060   14.50 1.627e-08
+#> y_max  10.3676   0.053753  192.88 9.127e-21
 #> -----------------------------------------------------
 
 # Extract variance-covariance matrix
