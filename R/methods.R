@@ -1,6 +1,6 @@
 #' Print contents of seinfitR object.
 #'
-#' @title Print seinfitR
+#' @title Print SeinfitR
 #' @param x Object of class 'seinfitR'.
 #' @param \dots currently unused.
 #' @param digits minimal number of \emph{significant} digits, see

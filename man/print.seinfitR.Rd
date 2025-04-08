@@ -2,7 +2,7 @@
 % Please edit documentation in R/methods.R
 \name{print.seinfitR}
 \alias{print.seinfitR}
-\title{Print seinfitR}
+\title{Print SeinfitR}
 \usage{
 \method{print}{seinfitR}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }

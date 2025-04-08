@@ -1,7 +1,7 @@
 #' Predict method for seinfitR objects
 #'
 #' This function generates predictions based on a fitted Seinhorst model.
-#'
+#' @title Predict SeinfitR
 #' @param object An object of class `seinfitR` (output from `seinfitR()`).
 #' @param newdata Optional. A data frame containing the independent variable for which predictions should be made.
 #' If not provided, predictions are made for the original data.

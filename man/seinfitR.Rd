@@ -2,9 +2,9 @@
 % Please edit documentation in R/seinfitR.R
 \name{seinfitR}
 \alias{seinfitR}
-\title{Fit the Seinhorst Model to Experimental Data}
+\title{SeinfitR}
 \usage{
-seinfitR(p_i, y, data, start, z_fixed = FALSE, control = seinfitR_control())
+seinfitR(p_i, y, data, start, z_fixed = FALSE, control = seinfitR.control())
 }
 \arguments{
 \item{p_i}{A character string specifying the column name in \code{data} that contains preplant nematode densities.}
@@ -20,7 +20,7 @@ are used to initialize the nonlinear least squares fitting process.}
 \item{z_fixed}{Logical. If \code{TRUE}, the function uses the default value for \( z^t \), as described in
 Seinhorst (1986) \doi{10.1007/978-1-4613-2251-1_11}}
 
-\item{control}{A control object created using \code{seinfitR_control()}, which specifies options for the optimization process.}
+\item{control}{A control object created using \code{seinfitR.control()}, which specifies options for the optimization process.}
 }
 \value{
 A list of class \code{"seinfitR"} containing:
@@ -43,7 +43,7 @@ The fitting process is performed using the \code{nlsLM} function from the \code{
 # Fit the model using seinfitR with specified initial values
 model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
                   start = list(m = 0.103, t = 250, z = 0.991),
-                  control = seinfitR_control(maxiter = 5))
+                  control = seinfitR.control(maxiter = 5))
 
 # View model summary
 summary(model)

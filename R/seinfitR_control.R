@@ -4,6 +4,7 @@
 #' used by the \code{nlsLM} function from the \code{minpack.lm} package. These parameters
 #' are specifically designed to control the fitting process in the \code{seinfitR} function.
 #'
+#' @title SeinfitR Control
 #' @param ftol Termination condition for relative reduction in the sum of squares.
 #' @param ptol Termination based on relative error between two consecutive iterations.
 #' @param gtol Controls the orthogonality between the function vector and the Jacobian.
@@ -18,7 +19,7 @@
 #' @return A list of control parameters to be used in the \code{nlsLM} function during the
 #' fitting of the Seinhorst model using \code{seinfitR}.
 #' @export
-seinfitR_control <- function(ftol = sqrt(.Machine$double.eps),
+seinfitR.control <- function(ftol = sqrt(.Machine$double.eps),
                              ptol = sqrt(.Machine$double.eps),
                              gtol = 0,
                              diag = list(),

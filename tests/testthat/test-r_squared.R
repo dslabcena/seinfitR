@@ -7,7 +7,7 @@ test_that("r_squared() method returns valid R² values", {
   # Fit the model
   model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
                     start = list(m = 0.103, t = 250, z = 0.991),
-                    control = seinfitR_control(maxiter = 5))
+                    control = seinfitR.control(maxiter = 5))
 
   # Extract R² values
   r2 <- r_squared(model)

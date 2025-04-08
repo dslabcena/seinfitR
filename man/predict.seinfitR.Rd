@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.seinfitR.R
 \name{predict.seinfitR}
 \alias{predict.seinfitR}
-\title{Predict method for seinfitR objects}
+\title{Predict SeinfitR}
 \usage{
 \method{predict}{seinfitR}(object, newdata = NULL, ...)
 }
@@ -18,5 +18,8 @@ If not provided, predictions are made for the original data.}
 A data frame with the independent variable and the corresponding predicted values.
 }
 \description{
+Predict method for seinfitR objects
+}
+\details{
 This function generates predictions based on a fitted Seinhorst model.
 }
