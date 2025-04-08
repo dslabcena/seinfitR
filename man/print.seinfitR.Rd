@@ -9,8 +9,7 @@
 \arguments{
 \item{x}{Object of class 'seinfitR'.}
 
-\item{digits}{minimal number of \emph{significant} digits, see
-\code{\link[base]{print.default}}}
+\item{digits}{minimal number of \emph{significant} digits}
 
 \item{\dots}{currently unused.}
 }
