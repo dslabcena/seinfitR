@@ -1,6 +1,6 @@
 Package: seinfitR
 Title: Modeling the Relationship Between Nematode Densities and Plant Growth
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Deoclecio", "Amorim", NULL, "amorim@cena.usp.br", role = "aut", "cph"),
     person("João", "Novoletti", NULL, "joao.novoletti@gmail.com", role = c("aut", "cre", "cph")))
