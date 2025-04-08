@@ -11,7 +11,7 @@
 #' are used to initialize the nonlinear least squares fitting process.
 #' @param z_fixed Logical. If `TRUE`, the function uses the default value for \( z^t \), as described in
 #' Seinhorst (1986) \doi{10.1007/978-1-4613-2251-1_11}
-#' @param control A control object created using `seinfitR.control()`, which specifies options for the optimization process.
+#' @param control A control object created using `seinfitR_control()`, which specifies options for the optimization process.
 #'
 #' @return A list of class `"seinfitR"` containing:
 #' \item{fit}{An object of class `nls` with the fitted model.}
@@ -33,14 +33,14 @@
 #' # Fit the model using seinfitR with specified initial values
 #' model <- seinfitR(p_i = "p_i", y = "y", data = jambu,
 #'                   start = list(m = 0.103, t = 250, z = 0.991),
-#'                   control = seinfitR.control(maxiter = 5))
+#'                   control = seinfitR_control(maxiter = 5))
 #'
 #' # View model summary
 #' summary(model)
 
 
 
-seinfitR <- function(p_i, y, data, start, z_fixed = FALSE, control = seinfitR.control()) {
+seinfitR <- function(p_i, y, data, start, z_fixed = FALSE, control = seinfitR_control()) {
   # Check for required arguments
   if (missing(data)) {
     stop("Error: The 'data' argument is missing. Please provide a data frame containing the experimental data.")

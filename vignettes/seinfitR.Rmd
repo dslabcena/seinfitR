@@ -53,7 +53,7 @@ model <- seinfitR(
   y = "y", 
   data = glasshouse,
   start = list(m = 6, t = 6),
-  control = seinfitR.control(maxiter = 20),
+  control = seinfitR_control(maxiter = 20),
   z_fixed = TRUE
 )
 ```

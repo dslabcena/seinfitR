@@ -19,7 +19,7 @@
 #' @return A list of control parameters to be used in the \code{nlsLM} function during the
 #' fitting of the Seinhorst model using \code{seinfitR}.
 #' @export
-seinfitR.control <- function(ftol = sqrt(.Machine$double.eps),
+seinfitR_control <- function(ftol = sqrt(.Machine$double.eps),
                              ptol = sqrt(.Machine$double.eps),
                              gtol = 0,
                              diag = list(),
