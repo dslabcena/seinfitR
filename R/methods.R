@@ -3,8 +3,7 @@
 #' @title Print SeinfitR
 #' @param x Object of class 'seinfitR'.
 #' @param \dots currently unused.
-#' @param digits minimal number of \emph{significant} digits, see
-#'   \code{\link[base]{print.default}}
+#' @param digits minimal number of \emph{significant} digits
 #' @return No return value, called for side effects
 #' @seealso \code{\link{seinfitR}}
 #' @export
