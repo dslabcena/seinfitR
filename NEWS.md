@@ -1,3 +1,5 @@
+# seinfitR (development version)
+
 # seinfitR 1.0.1
 
 * Fixed issues raised during initial CRAN submission.
